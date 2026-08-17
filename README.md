@@ -80,16 +80,20 @@ Resultado: Vite genera `dist/` sin errores. El HTML de entrada referencia el bun
 
 ### Imagen Docker (workflow `imagen` en GitHub Actions)
 
-En cada push a `main` el runner:
+Corrida [32040655247](https://github.com/Maarmapa/maarmapa-links/actions/runs/32040655247) (17 ago 2026), **verde en 21 s**:
 
-1. Construye `maarmapa-links:ci`.
-2. Arranca el contenedor en `:8080` y espera `healthy`.
-3. `GET /` debe incluir `maarmapa`.
-4. `GET /ruta/inventada` debe responder **200** con el documento principal (SPA).
-5. En la imagen final: `command -v node` falla; no existen `/app` ni `/package.json`.
-6. `docker exec … id` muestra el usuario `nginx`, no `root`.
+| Comprobación | Resultado |
+| --- | --- |
+| `docker build` | imagen `maarmapa-links:ci` |
+| `HEALTHCHECK` | `healthy` al intento 4 |
+| `GET /` | 200, contiene `maarmapa` |
+| `GET /ruta/inventada` | 200 + `index.html` (SPA, no 404) |
+| `command -v node` | vacío (`OK_sin_node`) |
+| `/app` y `/package.json` | no existen (`OK_sin_fuente`) |
+| usuario del proceso | `uid=101(nginx)` — no root |
+| tamaño de la imagen final | **49.1 MB** |
 
-El log de la última corrida queda en la pestaña **Actions** del repositorio.
+El log queda en la pestaña [Actions](https://github.com/Maarmapa/maarmapa-links/actions).
 
 ### Responsive
 
