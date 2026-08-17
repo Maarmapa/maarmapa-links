@@ -1,0 +1,50 @@
+name: imagen
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Construir imagen
+        run: docker build -t maarmapa-links:ci .
+
+      - name: Arrancar contenedor
+        run: docker run -d --name links -p 8080:8080 maarmapa-links:ci
+
+      - name: Esperar HEALTHCHECK
+        run: |
+          for i in $(seq 1 30); do
+            status=$(docker inspect --format='{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' links)
+            echo "intento $i: $status"
+            if [ "$status" = "healthy" ]; then exit 0; fi
+            sleep 2
+          done
+          docker logs links
+          exit 1
+
+      - name: La página responde y es SPA
+        run: |
+          set -e
+          html=$(curl -fsS http://127.0.0.1:8080/)
+          echo "$html" | grep -q 'maarmapa'
+          echo "$html" | grep -q 'root'
+          # ruta inexistente debe devolver el index, no 404
+          code=$(curl -s -o /tmp/spa.html -w '%{http_code}' http://127.0.0.1:8080/ruta/inventada)
+          test "$code" = "200"
+          grep -q 'root' /tmp/spa.html
+
+      - name: Imagen final sin Node ni fuente
+        run: |
+          set -e
+          docker run --rm --user 0 --entrypoint sh maarmapa-links:ci -c 'command -v node && exit 1 || echo OK_sin_node'
+          docker run --rm --user 0 --entrypoint sh maarmapa-links:ci -c 'test ! -d /app && test ! -e /package.json && echo OK_sin_fuente'
+          docker inspect --format='user={{.Config.User}} size={{.Size}}' maarmapa-links:ci
+          docker inspect --format='{{.State.User}}' links || true
+          docker exec links id
+          docker images maarmapa-links:ci --format 'tabla={{.Repository}} {{.Size}}'

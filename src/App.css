@@ -1,0 +1,142 @@
+:root {
+  --tinta: #16120e;
+  --panel: #201a13;
+  --hueso: #e9e1d3;
+  --comentario: #857c6d;
+  --spray: #ff5a1f;
+  --senal: #5c9e92;
+  --line: rgba(133, 124, 109, 0.28);
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 90, 31, 0.14), transparent 55%),
+    var(--tinta);
+  color: var(--hueso);
+  font-family: "Helvetica Neue", "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  background: transparent;
+}
+
+.link-card {
+  max-width: 28rem;
+}
+
+.avatar {
+  width: 7rem;
+  height: 7rem;
+  object-fit: cover;
+  border: 2px solid var(--line);
+  box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.12);
+}
+
+.name {
+  font-family: var(--mono);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  font-size: clamp(1.55rem, 5vw, 2rem);
+}
+
+.handle {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--comentario);
+}
+
+.handle .sep {
+  margin: 0 0.45rem;
+  color: var(--spray);
+}
+
+.bio {
+  max-width: 34ch;
+  color: #d8cfbf;
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.link-btn {
+  text-decoration: none;
+  color: var(--hueso);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  padding: 0.85rem 1rem;
+  transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.link-btn:hover,
+.link-btn:focus-visible {
+  color: var(--hueso);
+  border-color: var(--spray);
+  background: #261e16;
+  transform: translateY(-1px);
+}
+
+.link-btn:focus-visible {
+  outline: 2px solid var(--spray);
+  outline-offset: 3px;
+}
+
+.icon-wrap {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.55rem;
+  background: rgba(255, 90, 31, 0.12);
+  color: var(--spray);
+  font-size: 1.15rem;
+}
+
+.label {
+  font-family: var(--mono);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: var(--comentario);
+}
+
+.arrow {
+  color: var(--spray);
+  font-size: 0.95rem;
+}
+
+.footer-copy {
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--comentario);
+}
+
+@media (max-width: 575.98px) {
+  .avatar {
+    width: 5.75rem;
+    height: 5.75rem;
+  }
+
+  .bio {
+    font-size: 0.96rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-btn {
+    transition: none;
+  }
+}
