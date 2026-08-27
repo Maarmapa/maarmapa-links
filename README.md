@@ -66,7 +66,7 @@ Qué no se delegó a ciegas:
 
 - La arquitectura (datos en un módulo, Node solo en compile, Nginx en runtime, usuario no privilegiado) se fijó **antes** de generar archivos, siguiendo el enunciado.
 - Cada restricción se revisó en el resultado: que la imagen final no contenga `node` ni `/app`, que una ruta inventada siga devolviendo el `index.html`, que el `HEALTHCHECK` pase a `healthy`.
-- El contenido del perfil es real (Mario Maldonado / maarmapa) y el avatar es el de GitHub, no un retrato inventado.
+- El contenido del perfil es el nickname `maarmapa` y el avatar de GitHub, no un retrato inventado.
 
 ## Verificaciones
 

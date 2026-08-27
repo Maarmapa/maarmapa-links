@@ -2,7 +2,7 @@
 // cambiar nombre, foto o un enlace no obliga a tocar JSX.
 
 export const profile = {
-  name: 'Mario Maldonado',
+  name: 'maarmapa',
   handle: 'maarmapa',
   location: 'Santiago, CL',
   avatar: '/avatar.png',
